@@ -15,11 +15,13 @@ public class InstantiateObjectOnTouch : MonoBehaviour {
 
 	private const float k_ModelRotation = 180.0f;
 
+	private bool placed = false;
+
 	// Update is called once per frame
 	void Update () {
 		// If the player has not touched the screen, we are done with this update.
 		Touch touch;
-		if (Input.touchCount < 1 || (touch = Input.GetTouch (0)).phase != TouchPhase.Began) {
+		if (Input.touchCount < 1 || (touch = Input.GetTouch (0)).phase != TouchPhase.Began || placed == false) {
 			return;
 		}
 
@@ -48,6 +50,7 @@ public class InstantiateObjectOnTouch : MonoBehaviour {
 
 				// Make model a child of the anchor.
 				objectToPlace.transform.parent = anchor.transform;
+				placed = true;
 			}
 		}
 	}
