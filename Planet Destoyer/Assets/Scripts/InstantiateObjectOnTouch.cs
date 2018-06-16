@@ -11,9 +11,9 @@ public class InstantiateObjectOnTouch : MonoBehaviour {
 	/// <summary>
 	/// The gameobject to place when tapping the screen.
 	/// </summary>
-	public GameObject ObjectToPlacePrefab;
+	public GameObject objectToPlace;
 
-	private const float k_ModelRotation = 180.0f;
+	//private const float k_ModelRotation = 180.0f;
 
 	private bool placed = false;
 
@@ -21,7 +21,7 @@ public class InstantiateObjectOnTouch : MonoBehaviour {
 	void Update () {
 		// If the player has not touched the screen, we are done with this update.
 		Touch touch;
-		if (Input.touchCount < 1 || (touch = Input.GetTouch (0)).phase != TouchPhase.Began || placed == false) {
+		if (Input.touchCount < 1 || (touch = Input.GetTouch (0)).phase != TouchPhase.Began || placed == true) {
 			return;
 		}
 
@@ -38,11 +38,9 @@ public class InstantiateObjectOnTouch : MonoBehaviour {
 					hit.Pose.rotation * Vector3.up) < 0) {
 				Debug.Log ("Hit at back of the current DetectedPlane");
 			} else {
-				// Instantiate model at the hit pose.
-				var objectToPlace = Instantiate (ObjectToPlacePrefab, hit.Pose.position, hit.Pose.rotation);
 
 				// Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
-				objectToPlace.transform.Rotate (0, k_ModelRotation, 0, Space.Self);
+				//objectToPlace.transform.Rotate (0, k_ModelRotation, 0, Space.Self);
 
 				// Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
 				// world evolves.
@@ -50,6 +48,7 @@ public class InstantiateObjectOnTouch : MonoBehaviour {
 
 				// Make model a child of the anchor.
 				objectToPlace.transform.parent = anchor.transform;
+				objectToPlace.SetActive(true);
 				placed = true;
 			}
 		}
