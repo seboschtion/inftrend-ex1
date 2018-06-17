@@ -12,4 +12,4 @@ public class Spin : MonoBehaviour {
 	public void ResetSpin(){
 		transform.rotation = Quaternion.identity;
 	}
-}
+}   
